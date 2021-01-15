@@ -35,4 +35,24 @@ public class ProjectController {
         Project project1 = projectService.saveOrUpdateProject(project);
         return new ResponseEntity<Project>(project1, HttpStatus.CREATED);
     }
+
+    @GetMapping("/{projectId}")
+    public ResponseEntity<?> getProjectById(@PathVariable String projectId){
+        Project projectByIdentifier = projectService.findProjectByIdentifier(projectId);
+        ResponseEntity<Project> projectResponseEntity = new ResponseEntity<Project>(projectByIdentifier, HttpStatus.OK);
+        return projectResponseEntity;
+    }
+
+    @GetMapping("/all")
+    public List<Project> getAllProjects(){
+        return projectService.findAllProject();
+    }
+
+    @DeleteMapping("/{projectId}")
+    public ResponseEntity<?> deleteProjectById (@PathVariable String projectId){
+        projectService.deleteProject(projectId);
+        return new ResponseEntity<String>("Project with ID: " + projectId + " was deleted!",HttpStatus.OK);
+    }
+
+    //Updatelni egy sima post-os kéréssel kell
 }
